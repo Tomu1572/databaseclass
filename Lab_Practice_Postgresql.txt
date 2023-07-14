@@ -1,0 +1,28 @@
+--#1
+-- SELECT fname, lname FROM employee WHERE salary <= 35000;
+
+--#2
+-- SELECT ssn, fname, lname, address, bdate FROM employee 
+-- WHERE extract(year from employee.bdate) < 1965 AND salary < 40000;
+
+-- SELECT ssn, fname, lname, address, bdate FROM employee 
+-- WHERE date_part('year', employee.bdate::date) < 1965 AND salary < 40000;
+
+--#3
+-- SELECT ssn, fname, lname FROM employee
+-- WHERE lname LIKE '_a%s' ORDER BY fname DESC, lname DESC;
+
+--#4
+-- SELECT ssn, fname, lname
+-- FROM employee
+-- WHERE super_ssn IS NULL;
+
+--#5
+SELECT d.dname AS department_name, e_sup.fname AS supervisor_fname, e_sup.lname AS supervisor_lname,
+       ROUND(((e_sup.salary - e_emp.salary) * 100 / e_sup.salary), 2) AS Diff_Salary
+FROM employee e_emp
+JOIN department d ON e_emp.dno = d.dnumber
+LEFT JOIN employee e_sup ON e_emp.super_ssn = e_sup.ssn
+WHERE e_emp.fname = 'Joyce' AND e_emp.lname = 'English';
+
+--#6
